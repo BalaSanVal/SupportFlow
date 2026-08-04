@@ -1,10 +1,35 @@
-# IntelliJ
+# Java / Maven
+**/target/
+*.class
+*.jar
+*.war
+
+# IntelliJ IDEA
 .idea/
+**/.idea/
 *.iml
+*.iws
+*.ipr
 
 # VS Code
 .vscode/
+**/.vscode/
 
-# Windows
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Windows and operating system
 Thumbs.db
+desktop.ini
 .DS_Store
+
+# Angular / Node.js
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
