@@ -1,0 +1,13 @@
+package com.supportflow;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SupportflowApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SupportflowApiApplication.class, args);
+	}
+
+}

@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/supportflow
+    username: supportflow_user
+    password: supportflow_password
+    driver-class-name: org.postgresql.Driver
+
+logging:
+  level:
+    root: INFO
+    com.supportflow: DEBUG

@@ -1,0 +1,4 @@
+loggin:
+  level:
+    root: WARN
+    com.supportflow: DEBUG
