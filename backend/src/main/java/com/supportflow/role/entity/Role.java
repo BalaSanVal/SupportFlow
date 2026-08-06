@@ -1,5 +1,6 @@
 package com.supportflow.role.entity;
 
+import com.supportflow.role.validation.RoleCodeNormalizer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -40,7 +41,7 @@ public class Role {
     }
 
     public Role(String code, String name, String description) {
-        this.code = normalizeCode(code);
+        this.code = RoleCodeNormalizer.normalize(code);
         this.name = normalizeRequiredText(name);
         this.description = normalizeOptionalText(description);
         this.active = true;
@@ -61,14 +62,6 @@ public class Role {
     @PreUpdate
     private void preUpdate() {
         updatedAt = Instant.now();
-    }
-
-    private static String normalizeCode(String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Role code must not be blank");
-        }
-
-        return value.trim().toUpperCase();
     }
 
     private static String normalizeRequiredText(String value) {
