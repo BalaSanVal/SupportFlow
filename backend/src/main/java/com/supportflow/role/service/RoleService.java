@@ -1,8 +1,12 @@
 package com.supportflow.role.service;
 
+import com.supportflow.role.dto.response.RoleResponse;
+import com.supportflow.role.mapper.RoleMapper;
 import com.supportflow.role.repository.RoleRepository;
 import com.supportflow.role.entity.Role;
 import com.supportflow.role.validation.RoleCodeNormalizer;
+import com.supportflow.role.dto.request.RoleCreateRequest;
+import com.supportflow.role.exception.DuplicateRoleCodeException;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -16,15 +20,17 @@ public class RoleService {
     }
 
     @Transactional
-    public Role create(String code, String name, String description) {
-        String normalizedCode = RoleCodeNormalizer.normalize(code);
+    public RoleResponse create(RoleCreateRequest request) {
+        String normalizedCode = RoleCodeNormalizer.normalize(request.code());
 
         if (roleRepository.existsByCode(normalizedCode)) {
-            throw new IllegalStateException("A rol with code '" + normalizedCode + "' already exists");
+            throw new DuplicateRoleCodeException(normalizedCode);
         }
 
-        Role role = new Role(normalizedCode, name, description);
+        Role role = new Role(normalizedCode, request.name(), request.description());
 
-        return roleRepository.save(role);
+        Role savedRole = roleRepository.save(role);
+
+        return RoleMapper.toResponse(savedRole);
     }
 }
