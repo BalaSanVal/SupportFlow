@@ -2,6 +2,7 @@ package com.supportflow.common.exception;
 
 import com.supportflow.common.api.ApiError;
 import com.supportflow.role.exception.DuplicateRoleCodeException;
+import com.supportflow.role.exception.RoleNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -51,5 +52,21 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<ApiError> handleRoleNotFound(
+            RoleNotFoundException exception,
+            HttpServletRequest request
+    ) {
+        ApiError error = new ApiError(
+                Instant.now(),
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
